@@ -1,5 +1,10 @@
 import { DotContainer } from "./styles";
 
-export const Dot = () => {
-  <DotContainer />;
+interface DotProps {
+  clientY: number;
+  clientX: number;
+}
+
+export const Dot = ({ clientY, clientX }: DotProps) => {
+  return <DotContainer left={clientX} top={clientY} />;
 };
