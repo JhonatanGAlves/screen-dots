@@ -1,5 +1,10 @@
 import { HomeContainer } from "./styles";
+import { Dot } from "../../components/Dot/Dot";
 
 export const Home = () => {
-  <HomeContainer />;
+  return (
+    <HomeContainer>
+      <Dot />
+    </HomeContainer>
+  );
 };
