@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { HomeContainer } from "./styles";
+import { ButtonsContainer, HomeContainer } from "./styles";
 import { Dot } from "../../components/Dot/Dot";
+import { Button } from "../../components/Button/Button";
 
 type DotListType = {
   clientX: number;
@@ -9,8 +10,9 @@ type DotListType = {
 
 export const Home = () => {
   const [dotList, setDotList] = useState<DotListType[]>([]);
+  const [undoDotList, setUndoDotList] = useState<DotListType[]>([]);
 
-  function handleClick(event) {
+  function handleClick(event: any) {
     const clientX = event.clientX;
     const clientY = event.clientY;
 
@@ -19,13 +21,26 @@ export const Home = () => {
 
       return [...prev, newDot];
     });
+    setUndoDotList([]);
+  }
+
+  function handleUndo() {
+    const lastDot = dotList[dotList.length - 1];
+    const newDotList = dotList.slice(0, dotList.length - 1);
+
+    setUndoDotList((prev) => [...prev, lastDot]);
+    setDotList(newDotList);
   }
 
   return (
-    <HomeContainer onClick={(e) => handleClick(e)}>
+    <HomeContainer onClick={handleClick}>
       {dotList.map((dot) => (
         <Dot clientX={dot.clientX} clientY={dot.clientY} />
       ))}
+      <ButtonsContainer>
+        <Button type="undo" value="UNDO" onClick={handleUndo} />
+        <Button type="redo" value="REDO" />
+      </ButtonsContainer>
     </HomeContainer>
   );
 };
