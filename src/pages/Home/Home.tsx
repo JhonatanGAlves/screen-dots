@@ -13,14 +13,9 @@ export const Home = () => {
   const [undoDotList, setUndoDotList] = useState<DotListType[]>([]);
 
   function handleClick(event: any) {
-    const clientX = event.clientX;
-    const clientY = event.clientY;
+    const newDot = { clientX: event.clientX, clientY: event.clientY };
 
-    setDotList((prev) => {
-      const newDot = { clientX, clientY };
-
-      return [...prev, newDot];
-    });
+    setDotList((prev) => [...prev, newDot]);
     setUndoDotList([]);
   }
 
@@ -32,14 +27,28 @@ export const Home = () => {
     setDotList(newDotList);
   }
 
+  function handleRedo() {
+    if (undoDotList.length > 0) {
+      const lastUndidDot = undoDotList[undoDotList.length - 1];
+      const newUndoDotList = undoDotList.slice(0, undoDotList.length - 1);
+
+      setDotList((prev) => [...prev, lastUndidDot]);
+      setUndoDotList(newUndoDotList);
+    }
+  }
+
   return (
     <HomeContainer onClick={handleClick}>
       {dotList.map((dot) => (
         <Dot clientX={dot.clientX} clientY={dot.clientY} />
       ))}
       <ButtonsContainer>
-        <Button type="undo" value="UNDO" onClick={handleUndo} />
-        <Button type="redo" value="REDO" />
+        {dotList.length > 0 && (
+          <Button type="undo" value="UNDO" onClick={handleUndo} />
+        )}
+        {undoDotList.length > 0 && (
+          <Button type="redo" value="REDO" onClick={handleRedo} />
+        )}
       </ButtonsContainer>
     </HomeContainer>
   );
