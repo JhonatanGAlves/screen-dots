@@ -37,12 +37,20 @@ export const Home = () => {
     }
   }
 
+  function handleReset() {
+    setDotList([]);
+    setUndoDotList([]);
+  }
+
   return (
     <HomeContainer onClick={handleClick}>
       {dotList.map((dot) => (
         <Dot clientX={dot.clientX} clientY={dot.clientY} />
       ))}
       <ButtonsContainer>
+        {(dotList.length > 0 || undoDotList.length > 0) && (
+          <Button type="reset" value="RESET" onClick={handleReset} />
+        )}
         {dotList.length > 0 && (
           <Button type="undo" value="UNDO" onClick={handleUndo} />
         )}

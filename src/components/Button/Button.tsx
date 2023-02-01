@@ -2,7 +2,7 @@ import { ArrowUDownLeft, ArrowUDownRight } from "phosphor-react";
 import { ButtonContainer } from "./styles";
 
 interface ButtonProps {
-  type: "undo" | "redo";
+  type: "undo" | "redo" | "reset";
   value: string;
   onClick?: () => void;
 }
@@ -16,7 +16,9 @@ export const Button = ({ type, value, onClick }: ButtonProps) => {
       }}
       type={type}
     >
-      {type === "undo" ? (
+      {type === "reset" ? (
+        <span>{value}</span>
+      ) : type === "undo" ? (
         <>
           <ArrowUDownLeft size={24} />
           <span>{value}</span>

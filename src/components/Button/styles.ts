@@ -18,7 +18,11 @@ export const ButtonContainer = styled.div<{ type: string }>`
 
   transition: 0.2s;
 
-  :hover {
+  color: ${({ type }) => (type === "reset" ? "white" : "black")};
+  background-color: ${({ type }) =>
+    type === "reset" ? "black" : "transparent"};
+
+  :hover:not([type="reset"]) {
     color: white;
     background-color: black;
   }
